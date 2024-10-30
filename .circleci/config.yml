@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     macos:
-      xcode: "13.0.0"  # Utilisez une version d’Xcode disponible (ajustez selon vos besoins)
+      xcode: "14.0.0"  # Utilisez une version d’Xcode disponible
     resource_class: macos.x86.medium  # Classe de ressource compatible
     steps:
       - checkout
