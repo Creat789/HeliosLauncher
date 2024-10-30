@@ -7,7 +7,7 @@ const logger = LoggerUtil.getLogger('ConfigManager')
 
 const sysRoot = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : process.env.HOME)
 
-const dataPath = path.join(sysRoot, '.helioslauncher')
+const dataPath = path.join(sysRoot, '.arkaniaz_launcher')
 
 const launcherDir = require('@electron/remote').app.getPath('userData')
 
@@ -310,6 +310,27 @@ exports.getAuthAccounts = function(){
  * @returns {Object} The authenticated account with the given uuid.
  */
 exports.getAuthAccount = function(uuid){
+    return config.authenticationDatabase[uuid]
+}
+
+/**
+ * Adds an authenticated account to the database to be stored.
+ * 
+ * @param {string} uuid The uuid of the authenticated account.
+ * @param {string} accessToken The accessToken of the authenticated account.
+ * @param {string} username The username (usually email) of the authenticated account.
+ * @param {string} displayName The in game name of the authenticated account.
+ * 
+ * @returns {Object} The authenticated account object created by this action.
+ */
+exports.addAuthAccount = function(uuid, accessToken, username, displayName){
+    config.selectedAccount = uuid
+    config.authenticationDatabase[uuid] = {
+        accessToken,
+        username: username.trim(),
+        uuid: uuid.trim(),
+        displayName: displayName.trim()
+    }
     return config.authenticationDatabase[uuid]
 }
 

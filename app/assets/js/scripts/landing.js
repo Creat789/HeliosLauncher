@@ -149,7 +149,7 @@ function updateSelectedAccount(authUser){
             username = authUser.displayName
         }
         if(authUser.uuid != null){
-            document.getElementById('avatarContainer').style.backgroundImage = `url('https://mc-heads.net/body/${authUser.uuid}/right')`
+            document.getElementById('avatarContainer').style.backgroundImage = `url('https://arkaniaz.fr/api/skin-api/avatars/face/${authUser.displayName}')`
         }
     }
     user_text.innerHTML = username
@@ -163,18 +163,18 @@ function updateSelectedServer(serv){
     }
     ConfigManager.setSelectedServer(serv != null ? serv.rawServer.id : null)
     ConfigManager.save()
-    server_selection_button.innerHTML = '&#8226; ' + (serv != null ? serv.rawServer.name : Lang.queryJS('landing.noSelection'))
+    //server_selection_button.innerHTML = '&#8226; ' + (serv != null ? serv.rawServer.name : Lang.queryJS('landing.noSelection'))
     if(getCurrentView() === VIEWS.settings){
         animateSettingsTabRefresh()
     }
     setLaunchEnabled(serv != null)
 }
 // Real text is set in uibinder.js on distributionIndexDone.
-server_selection_button.innerHTML = '&#8226; ' + Lang.queryJS('landing.selectedServer.loading')
+/*server_selection_button.innerHTML = '&#8226; ' + Lang.queryJS('landing.selectedServer.loading')
 server_selection_button.onclick = async e => {
     e.target.blur()
     await toggleServerSelection(true)
-}
+}*/
 
 // Update Mojang Status Color
 const refreshMojangStatuses = async function(){
@@ -229,10 +229,6 @@ const refreshMojangStatuses = async function(){
             status = 'green'
         }
     }
-    
-    document.getElementById('mojangStatusEssentialContainer').innerHTML = tooltipEssentialHTML
-    document.getElementById('mojangStatusNonEssentialContainer').innerHTML = tooltipNonEssentialHTML
-    document.getElementById('mojang_status_icon').style.color = MojangRestAPI.statusToHex(status)
 }
 
 const refreshServerStatus = async (fade = false) => {
@@ -243,17 +239,23 @@ const refreshServerStatus = async (fade = false) => {
     let pVal = Lang.queryJS('landing.serverStatus.offline')
 
     try {
-
         const servStat = await getServerStatus(47, serv.hostname, serv.port)
         console.log(servStat)
+
+        // Définir le nombre de joueurs connectés minimum entre 2 et 5 si le nombre actuel est inférieur
+        const minPlayers = 2
+        const maxPlayers = 5
+        const displayedOnlinePlayers = Math.max(servStat.players.online, Math.floor(Math.random() * (maxPlayers - minPlayers + 1)) + minPlayers)
+
         pLabel = Lang.queryJS('landing.serverStatus.players')
-        pVal = servStat.players.online + '/' + servStat.players.max
+        pVal = displayedOnlinePlayers + '/' + servStat.players.max
 
     } catch (err) {
         loggerLanding.warn('Unable to refresh server status, assuming offline.')
         loggerLanding.debug(err)
     }
-    if(fade){
+
+    if (fade) {
         $('#server_status_wrapper').fadeOut(250, () => {
             document.getElementById('landingPlayerLabel').innerHTML = pLabel
             document.getElementById('player_count').innerHTML = pVal
@@ -263,8 +265,8 @@ const refreshServerStatus = async (fade = false) => {
         document.getElementById('landingPlayerLabel').innerHTML = pLabel
         document.getElementById('player_count').innerHTML = pVal
     }
-    
 }
+
 
 refreshMojangStatuses()
 // Server Status is refreshed in uibinder.js on distributionIndexDone.
@@ -699,7 +701,7 @@ function slide_(up){
         lCLLeft.style.top = '0px'
         lCLCenter.style.top = '0px'
         lCLRight.style.top = '0px'
-        newsBtn.style.top = '10px'
+        newsBtn.style.top = '63px'
     }
 }
 

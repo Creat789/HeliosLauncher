@@ -19,7 +19,7 @@ const loginButton           = document.getElementById('loginButton')
 const loginForm             = document.getElementById('loginForm')
 
 // Control variables.
-let lu = false, lp = false
+let lu = true, lp = true
 
 
 /**
@@ -144,13 +144,8 @@ function formDisabled(v){
     loginCancelButton.disabled = v
     loginUsername.disabled = v
     loginPassword.disabled = v
-    if(v){
-        checkmarkContainer.setAttribute('disabled', v)
-    } else {
-        checkmarkContainer.removeAttribute('disabled')
-    }
-    loginRememberOption.disabled = v
 }
+
 
 let loginViewOnSuccess = VIEWS.landing
 let loginViewOnCancel = VIEWS.settings
@@ -187,20 +182,27 @@ loginButton.addEventListener('click', () => {
     // Show loading stuff.
     loginLoading(true)
 
-    AuthManager.addMojangAccount(loginUsername.value, loginPassword.value).then((value) => {
+    AuthManager.addAccount(loginUsername.value, loginPassword.value).then((value) => {
         updateSelectedAccount(value)
         loginButton.innerHTML = loginButton.innerHTML.replace(Lang.queryJS('login.loggingIn'), Lang.queryJS('login.success'))
         $('.circle-loader').toggleClass('load-complete')
         $('.checkmark').toggle()
         setTimeout(() => {
-            switchView(VIEWS.login, loginViewOnSuccess, 500, 500, async () => {
+            switchView(VIEWS.login, loginViewOnSuccess, 500, 500, () => {
                 // Temporary workaround
                 if(loginViewOnSuccess === VIEWS.settings){
-                    await prepareSettings()
+                    prepareSettings()
                 }
+                if(ConfigManager.isFirstLaunch()){
+                    toggleServerSelection(false)
+                }
+                
                 loginViewOnSuccess = VIEWS.landing // Reset this for good measure.
                 loginCancelEnabled(false) // Reset this for good measure.
                 loginViewCancelHandler = null // Reset this for good measure.
+                if(loginPassword.value == ""){
+                    user_text.innerHTML = loginUsername.value
+                }
                 loginUsername.value = ''
                 loginPassword.value = ''
                 $('.circle-loader').toggleClass('load-complete')
@@ -210,25 +212,16 @@ loginButton.addEventListener('click', () => {
                 formDisabled(false)
             })
         }, 1000)
-    }).catch((displayableError) => {
+    }).catch((err) => {
         loginLoading(false)
-
-        let actualDisplayableError
-        if(isDisplayableError(displayableError)) {
-            msftLoginLogger.error('Error while logging in.', displayableError)
-            actualDisplayableError = displayableError
-        } else {
-            // Uh oh.
-            msftLoginLogger.error('Unhandled error during login.', displayableError)
-            actualDisplayableError = Lang.queryJS('login.error.unknown')
-        }
-
-        setOverlayContent(actualDisplayableError.title, actualDisplayableError.desc, Lang.queryJS('login.tryAgain'))
+        const errF = resolveError(err)
+        setOverlayContent(errF.title, errF.desc, Lang.queryJS('login.tryAgain'))
         setOverlayHandler(() => {
             formDisabled(false)
             toggleOverlay(false)
         })
         toggleOverlay(true)
+        loggerLogin.log('Error while logging in.', err)
     })
 
 })

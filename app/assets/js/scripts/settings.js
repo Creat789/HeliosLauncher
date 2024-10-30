@@ -9,6 +9,47 @@ const settingsState = {
     invalid: new Set()
 }
 
+function bindCrashReportButton() {
+    const spBtn = document.getElementById('FindCrashreportButton')
+    spBtn.onclick = () => {
+        const p = path.join(CACHE_SETTINGS_INSTANCE_DIR, 'crash-reports')
+        DropinModUtil.validateDir(p)
+        shell.openPath(p)
+    }
+}
+
+function bindLogsButton() {
+    const spBtn = document.getElementById('FindLogsButton')
+    spBtn.onclick = () => {
+        const p = path.join(CACHE_SETTINGS_INSTANCE_DIR, 'logs')
+        DropinModUtil.validateDir(p)
+        shell.openPath(p)
+    }
+}
+
+const fs = require('fs')
+const { clipboard } = require('electron')
+
+function bindCopyLogButton() {
+    const cpBtn = document.getElementById('CopyLogsButton')
+    cpBtn.onclick = () => {
+        const logFilePath = path.join(CACHE_SETTINGS_INSTANCE_DIR, 'logs', 'latest.log')
+        
+        // Vérifie que le fichier existe avant de le lire
+        fs.readFile(logFilePath, 'utf8', (err, data) => {
+            if (err) {
+                console.error('Erreur lors de la lecture du fichier:', err)
+                return
+            }
+            
+            // Copie le contenu du fichier dans le presse-papiers
+            clipboard.writeText(data)
+            console.log('Contenu du fichier latest copié dans le presse-papiers.')
+        })
+    }
+}
+
+
 function bindSettingsSelect(){
     for(let ele of document.getElementsByClassName('settingsSelectContainer')) {
         const selectedDiv = ele.getElementsByClassName('settingsSelectSelected')[0]
@@ -351,12 +392,6 @@ document.getElementById('settingsAddMojangAccount').onclick = (e) => {
     })
 }
 
-// Bind the add microsoft account button.
-document.getElementById('settingsAddMicrosoftAccount').onclick = (e) => {
-    switchView(getCurrentView(), VIEWS.waiting, 500, 500, () => {
-        ipcRenderer.send(MSFT_OPCODE.OPEN_LOGIN, VIEWS.settings, VIEWS.settings)
-    })
-}
 
 // Bind reply for Microsoft Login.
 ipcRenderer.on(MSFT_OPCODE.REPLY_LOGIN, (_, ...arguments_) => {
@@ -640,7 +675,7 @@ function populateAuthAccounts(){
 
         const accHtml = `<div class="settingsAuthAccount" uuid="${acc.uuid}">
             <div class="settingsAuthAccountLeft">
-                <img class="settingsAuthAccountImage" alt="${acc.displayName}" src="https://mc-heads.net/body/${acc.uuid}/60">
+                <img class="settingsAuthAccountImage" alt="${acc.displayName}" src="https://arkaniaz.fr/api/skin-api/avatars/face/${acc.uuid}">
             </div>
             <div class="settingsAuthAccountRight">
                 <div class="settingsAuthAccountDetails">
@@ -670,7 +705,6 @@ function populateAuthAccounts(){
 
     })
 
-    settingsCurrentMicrosoftAccounts.innerHTML = microsoftAuthAccountStr
     settingsCurrentMojangAccounts.innerHTML = mojangAuthAccountStr
 }
 
@@ -1134,6 +1168,9 @@ async function prepareModsTab(first){
     await resolveDropinModsForUI()
     await resolveShaderpacksForUI()
     bindDropinModsRemoveButton()
+    bindCrashReportButton()
+    bindLogsButton()
+    bindCopyLogButton()
     bindDropinModFileSystemButton()
     bindShaderpackButton()
     bindModsToggleSwitch()
@@ -1453,7 +1490,7 @@ function populateAboutVersionInformation(){
  */
 function populateReleaseNotes(){
     $.ajax({
-        url: 'https://github.com/dscalzi/HeliosLauncher/releases.atom',
+        url: 'https://github.com/Creat789/ArkaniaZLauncher/releases.atom',
         success: (data) => {
             const version = 'v' + remote.app.getVersion()
             const entries = $(data).find('entry')

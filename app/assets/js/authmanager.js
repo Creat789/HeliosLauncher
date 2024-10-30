@@ -128,6 +128,32 @@ function mojangErrorDisplayable(errorCode) {
     }
 }
 
+exports.addAccount = async function(username, password){
+    if(password != ""){
+        try {
+            const session = await Mojang.authenticate(username, password, ConfigManager.getClientToken())
+            if(session.selectedProfile != null){
+                const ret = ConfigManager.addAuthAccount(session.selectedProfile.id, session.accessToken, username, session.selectedProfile.name)
+                if(ConfigManager.getClientToken() == null){
+                    ConfigManager.setClientToken(session.clientToken)
+                }
+                ConfigManager.save()
+                return ret
+            } else {
+                throw new Error('NotPaidAccount')
+            }
+        
+        } catch (err){
+            return Promise.reject(err)
+        }
+    } else {
+        ConfigManager.addAuthAccount(username, "sry", username, username)
+        ConfigManager.setClientToken("sry")
+        ConfigManager.save()
+    }
+}
+
+
 // Functions
 
 /**

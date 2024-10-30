@@ -12,21 +12,20 @@ let loginOptionsViewCancelHandler
 
 function loginOptionsCancelEnabled(val){
     if(val){
-        $(loginOptionsCancelContainer).show()
+        loginOptionsCancelContainer.style.display = 'block'
     } else {
-        $(loginOptionsCancelContainer).hide()
+        loginOptionsCancelContainer.style.display = 'none'
     }
 }
 
-loginOptionMicrosoft.onclick = (e) => {
-    switchView(getCurrentView(), VIEWS.waiting, 500, 500, () => {
-        ipcRenderer.send(
-            MSFT_OPCODE.OPEN_LOGIN,
-            loginOptionsViewOnLoginSuccess,
-            loginOptionsViewOnLoginCancel
-        )
-    })
+function loginCancelEnabled(val){
+    if(val){
+        loginOptionsCancelContainer.style.display = 'block';
+    } else {
+        loginOptionsCancelContainer.style.display = 'none';
+    }
 }
+
 
 loginOptionMojang.onclick = (e) => {
     switchView(getCurrentView(), VIEWS.login, 500, 500, () => {
@@ -41,7 +40,6 @@ loginOptionsCancelButton.onclick = (e) => {
         // Clear login values (Mojang login)
         // No cleanup needed for Microsoft.
         loginUsername.value = ''
-        loginPassword.value = ''
         if(loginOptionsViewCancelHandler != null){
             loginOptionsViewCancelHandler()
             loginOptionsViewCancelHandler = null

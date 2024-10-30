@@ -13,6 +13,11 @@
 }
 
 @font-face {
+    font-family: 'Pixel Craft';
+    src: url('../fonts/pixel-craft.ttf');
+}
+
+@font-face {
     font-family: 'Avenir Medium';
     src: url('../fonts/Avenir-Medium.ttf');
 }
@@ -273,12 +278,8 @@ body, button {
 */
 
 #welcomeImageSeal {
-    border-radius: 50%;
-    border: 2px solid #cad7e1;
-    background: rgba(1, 2, 1, 0.5);
     height: 125px;
     width: 125px;
-    box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
     margin-bottom: 5%;
     margin-top: 10%;
 }
@@ -486,12 +487,8 @@ body, button {
 
 /* Logo on login form. */
 #loginImageSeal {
-    border-radius: 50%;
-    border: 2px solid #cad7e1;
-    background: rgba(1, 2, 1, 0.5);
-    height: 125px;
+height: 125px;
     width: 125px;
-    box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
     margin-bottom: 20px;
 }
 
@@ -2453,6 +2450,68 @@ input:checked + .toggleSwitchSlider:before {
     overflow-y: hidden;
 }
 
+#FindCrashreportButton {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(126, 126, 126, 0.57);
+    border-radius: 3px;
+    height: 50px;
+    width: 100%;
+    text-align: left;
+    padding: 0px 50px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+    margin-bottom: 10px;
+}
+#FindCrashreportButton:hover,
+#FindCrashreportButton:focus,
+#FindCrashreportButton[drag] {
+    background: rgba(54, 54, 54, 0.25);
+    text-shadow: 0px 0px 20px white;
+}
+
+#FindLogsButton {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(126, 126, 126, 0.57);
+    border-radius: 3px;
+    height: 50px;
+    width: 100%;
+    text-align: left;
+    padding: 0px 50px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+    margin-bottom: 10px;
+}
+#FindLogsButton:hover,
+#FindLogsButton:focus,
+#FindLogsButton[drag] {
+    background: rgba(54, 54, 54, 0.25);
+    text-shadow: 0px 0px 20px white;
+}
+
+
+#CopyLogsButton {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(126, 126, 126, 0.57);
+    border-radius: 3px;
+    height: 50px;
+    width: 100%;
+    text-align: left;
+    padding: 0px 50px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+    margin-bottom: 10px;
+}
+#CopyLogsButton:hover,
+#CopyLogsButton:focus,
+#CopyLogsButton[drag] {
+    background: rgba(54, 54, 54, 0.25);
+    text-shadow: 0px 0px 20px white;
+}
+
+
 /* Upper content container. */
 #landingContainer > #upper {
     position: relative;
@@ -2482,8 +2541,17 @@ input:checked + .toggleSwitchSlider:before {
 #landingContainer > #lower {
     height: 23%;
     display: flex;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background: linear-gradient(to top, rgb(0 0 0), rgba(0, 0, 0, 0))
 }
+
+.button_media{
+    background-color: #6278c5cf;
+    width: 94px;
+    padding: 5px;
+    border-radius: 5px;
+    border-color: transparent;
+}
+
 #landingContainer > #lower > #left {
     position: relative;
     transition: top 2s ease;
@@ -2491,14 +2559,13 @@ input:checked + .toggleSwitchSlider:before {
     height: 100%;
     width: 33%;
     display: inline-flex;
-    justify-content: center;
 }
 #landingContainer > #lower > #left #content {
     position: relative;
-    top: 25px;
+    top: 61px;
     display: inline-flex;
     line-height: 24px;
-    left: 50px;
+    margin-left: 29px;
 }
 #landingContainer > #lower > #center {
     position: relative;
@@ -2513,7 +2580,7 @@ input:checked + .toggleSwitchSlider:before {
     position: relative;
     z-index: 500;
     transition: top 2s ease;
-    top: 10px;
+    top: 63px;
 }
 #landingContainer > #lower > #right {
     position: relative;
@@ -2951,12 +3018,13 @@ input:checked + .toggleSwitchSlider:before {
 
 /*  Wrapper container for top, right content. */
 #rightContainer {
-    display: flex;
+display: flex;
     flex-direction: column;
     position: relative;
-    top: 50px;
+    top: 20px;
     align-items: flex-start;
     height: calc(100% - 50px);
+    left: 42px;
 }
 
 /* Right hand user content container. */
@@ -3047,6 +3115,7 @@ input:checked + .toggleSwitchSlider:before {
     justify-content: center;
     align-items: center;
     height: 27px;
+    margin-bottom: 15px;
 }
 
 /* Divider bar between the external and internal icons. */
@@ -3181,7 +3250,7 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Style for a general label on the bottom of the landing view. */
 .bot_label {
-    font-size: 9px;
+    font-size: 27px;
     letter-spacing: 1px;
     font-weight: bold;
     text-shadow: 0px 0px 0px #bebcbb;
@@ -3202,14 +3271,14 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Maintains maximum width on the status bar. */
 #server_status_wrapper {
-    display: inline-flex;
+    display: contents;
     width: 75px;
 }
 
 /* Span which displays the player count of the selected server. */
 #player_count {
     color: #949494;
-    font-size: 8px;
+    font-size: 18px;
     font-weight: 900;
     text-shadow: 0px 0px 20px #949494;
     margin-left: 10px;
@@ -3365,18 +3434,17 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Arrow image which floats above the news button. */
 #newsButtonSVG {
-    height: 11px;
-    margin-left: -2px;
+    height: 15px;
     transition: 0.25s ease;
 }
 
 /* Span which contains the news button text. */
 #newsButtonText {
-    color: white;
+color: white;
     font-weight: 900;
     letter-spacing: 2px;
     text-shadow: 0px 0px 0px #bebcbb;
-    font-size: 11px;
+    font-size: 28px;
     line-height: 30px;
     display: flex;
     transition: 0.25s ease;
@@ -3389,8 +3457,9 @@ input:checked + .toggleSwitchSlider:before {
 /* Main launch content container. */
 #landingContainer > #lower > #right #launch_content {
     position: relative;
-    top: 25px;
+    top: 27px;
     display: inline-flex;
+    left: 141px;
 }
 
 /* The launch button. */
@@ -3401,7 +3470,7 @@ input:checked + .toggleSwitchSlider:before {
     font-weight: 900;
     letter-spacing: 2px;
     text-shadow: 0px 0px 0px #bebcbb;
-    font-size: 20px;
+    font-size: 58px;
     padding: 0px;
     transition: 0.25s ease;
     outline: none;
