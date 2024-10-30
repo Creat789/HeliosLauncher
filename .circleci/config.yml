@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     macos:
-      xcode: "15.4.0"  # Version d'Xcode souhaitée
+      xcode: "14.2.0"
     resource_class: m2pro.medium  # Classe de ressource
     steps:
       - checkout
