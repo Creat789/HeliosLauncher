@@ -3,7 +3,8 @@ version: 2.1
 jobs:
   build:
     macos:
-      xcode: "13.2.1"  # Utilisez la version de Xcode qui correspond le mieux à votre projet
+      xcode: "13.0.0"  # Utilisez une version d’Xcode disponible (ajustez selon vos besoins)
+    resource_class: macos.x86.medium  # Classe de ressource compatible
     steps:
       - checkout
 
@@ -22,7 +23,7 @@ jobs:
 
       - run:
           name: Compiler le projet
-          command: npm run build  # Modifiez cette commande selon vos scripts de build
+          command: npm run build  # Modifiez selon votre commande de build
 
 workflows:
   version: 2
