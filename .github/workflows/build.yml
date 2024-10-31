@@ -34,16 +34,10 @@ jobs:
         run: npm run dist
         shell: bash
 
-      - name: Upload Build Artefacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: my-artifact
-          path: path/to/your/build/directory/**
-
-      - name: Download Artefact
-        uses: actions/download-artifact@v4
-        with:
-          name: my-artifact
-
-      - name: Display structure of downloaded files
-        run: ls -R
+          path: dist/**  # Chemin vers ton répertoire de build
+          if-no-files-found: warn
+          include-hidden-files: false
