@@ -1,21 +1,17 @@
-name: FTPS Test
-
+name: CI -> Deploy to My website
 on:
   push:
-    branches: [master]
-
+    branches: [ main, development ]
 jobs:
-  deploy:
-    name: 🚀 Deploy website every commit
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v4
-
-      - name: 📂 Sync files
-        uses: ./
+      - uses: actions/checkout@v4
+      # Here is the deployment action
+      - name: Upload from public_html via FTP
+        uses: airvzxf/ftp-deployment-action@latest
         with:
           server: map.arkaniaz.fr
-          username: ${{ secrets.FTP_USERNAME }}
+          user: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
+          local_dir: "./"
