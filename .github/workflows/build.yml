@@ -33,6 +33,18 @@ jobs:
 
       - name: Build
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GIT_TOKEN1 }}
         run: npm run dist
         shell: bash
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v1.0.0  # Change this to your desired tag name
+          release_name: Release v1.0.0  # You can customize this as needed
+          body: |
+            Changes in this release:
+            - Your changes here
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN1 }}
