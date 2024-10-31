@@ -1,0 +1,29 @@
+name: Build and Upload to FTP
+
+on: push
+
+jobs:
+  release:
+    runs-on: macos-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run dist
+
+      - name: Upload to FTP
+        env:
+          FTP_HOST: ftp.franceserv.fr
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          curl -T www/launcher.arkaniaz.fr/buildfile.ext ftp://$FTP_HOST/ --user $FTP_USERNAME:$FTP_PASSWORD
