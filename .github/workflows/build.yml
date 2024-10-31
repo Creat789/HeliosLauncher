@@ -46,5 +46,9 @@ jobs:
           body: |
             Changes in this release:
             - Your changes here
+          files: |
+            path/to/your/build/artifact1
+            path/to/your/build/artifact2
+            # Add more artifacts as needed
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN1 }}
