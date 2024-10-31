@@ -1,22 +1,16 @@
-name: CI -> Deploy to My website
-
-on:
-  push:
-    branches: [ main, development ]
-
+on: push
+name: 🚀 Deploy website on push
 jobs:
-  build:
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      # Here is the deployment action
-      - name: Upload from public_html via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: "map.arkaniaz.fr"
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: "./"  # Chemin local vers le dossier à déployer
-          server-dir: "/public_html"  # Répertoire cible sur le serveur FTP
-          port: 22  # Port pour la connexion
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: map.arkaniaz.fr
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
