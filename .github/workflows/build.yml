@@ -1,4 +1,4 @@
-name: Build1
+name: Build
 
 on: push
 
@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - name: Check out Git repository
@@ -33,6 +33,6 @@ jobs:
 
       - name: Build
         env:
-          GH_TOKEN: ${{ secrets.GIT_TOKEN1 }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run dist
         shell: bash
