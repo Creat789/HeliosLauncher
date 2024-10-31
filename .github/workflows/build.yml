@@ -33,6 +33,6 @@ jobs:
 
       - name: Build
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.Creat789 }}
         run: npm run dist
         shell: bash
