@@ -5,9 +5,9 @@
   "description": "Modded Minecraft Launcher",
   "author": "Creat789 (https://github.com/Creat789/)",
   "license": "UNLICENSED",
-  "homepage": "https://github.com/Creat789/ArkaniaZLauncher",
+  "homepage": "https://github.com/Creat789/HeliosLauncher",
   "bugs": {
-    "url": "https://github.com/Creat789/ArkaniaZLauncher/issues"
+    "url": "https://github.com/Creat789/HeliosLauncher/issues"
   },
   "private": true,
   "main": "index.js",
