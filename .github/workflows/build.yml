@@ -3,11 +3,8 @@ name: Build
 on: push
 
 jobs:
-  release:
+  build:
     runs-on: ${{ matrix.os }}
-
-    permissions:
-      contents: write
 
     strategy:
       matrix:
@@ -32,23 +29,11 @@ jobs:
         shell: bash
 
       - name: Build
-        env:
-          GH_TOKEN: ${{ secrets.GIT_TOKEN1 }}
         run: npm run dist
         shell: bash
 
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
+      - name: Upload Build Artefacts
+        uses: actions/upload-artifact@v3
         with:
-          tag_name: v1.0.0  # Change this to your desired tag name
-          release_name: Release v1.0.0  # You can customize this as needed
-          body: |
-            Changes in this release:
-            - Your changes here
-          files: |
-            path/to/your/build/artifact1
-            path/to/your/build/artifact2
-            # Add more artifacts as needed
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN1 }}
+          name: build-artifacts
+          path: path/to/your/build/directory/*
