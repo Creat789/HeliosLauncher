@@ -30,7 +30,7 @@ jobs:
 
       - name: Build
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN1 }}
+          GH_TOKEN: ${{ secrets.GIT_TOKEN1 }}
         run: npm run dist
         shell: bash
 
