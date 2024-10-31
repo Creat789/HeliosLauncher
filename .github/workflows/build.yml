@@ -29,11 +29,21 @@ jobs:
         shell: bash
 
       - name: Build
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN1 }}
         run: npm run dist
         shell: bash
 
       - name: Upload Build Artefacts
         uses: actions/upload-artifact@v3
         with:
-          name: build-artifacts
-          path: path/to/your/build/directory/*
+          name: my-artifact
+          path: path/to/your/build/directory/**
+
+      - name: Download Artefact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+
+      - name: Display structure of downloaded files
+        run: ls -R
