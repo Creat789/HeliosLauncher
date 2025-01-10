@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [macOS-13, ubuntu-latest, windows-latest]
+        os: [macos-13, ubuntu-latest, windows-latest]
 
     steps:
       - name: Check out Git repository
@@ -33,6 +33,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GIT_TOKEN1 }}
         run: npm run dist
         shell: bash
+
+      - name: Detach Disk Image (macOS)
+        run: hdiutil detach -quiet /dev/disk2 || true
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
